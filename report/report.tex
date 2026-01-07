@@ -92,7 +92,7 @@ In particular, we investigate how different preprocessing choices and network st
 \subsection{Method}
 \explanation{
 The project was implemented using the \texttt{pgmpy} \cite{pgmpy} library to construct Bayesian Network models and perform probabilistic inference. The analysis started with data preprocessing, including handling missing or implausible values (e.g., using scikit-learn imputation methods \cite{scikit_learn}) and discretizing continuous variables using different strategies. \\
-Several Bayesian Network structures were considered, including manually specified models and structures learned from data using score-based hill-climbing algorithms with different scoring functions. For each model, conditional probability distributions were estimated from the processed dataset. \\
+Several Bayesian Network structures were considered, including manually specified models and structures learned from data using tree-based search and score-based hill-climbing algorithms with different scoring functions. For each model, conditional probability distributions were estimated from the processed dataset. \\
 Inference queries were then performed to evaluate how evidence on selected variables affects the posterior probability of diabetes. By varying preprocessing methods and network structures, we analyzed their impact on inference behavior and model interpretability.
 }
 
@@ -148,7 +148,7 @@ Figure~\ref{fig:network} illustrates a representative Bayesian Network used in t
 
 \explanation{
 Continuous variables were discretized into a limited number of states to enable parameter learning and tractable inference. Conditional probability tables were estimated directly from the preprocessed dataset, following imputation of missing or implausible values. \\
-Different modeling choices were explored. In addition to manually specified dependency assumptions, score-based structure learning was applied using hill-climbing algorithms with alternative scoring functions. This allowed us to analyze how structural assumptions and preprocessing decisions influence the inferred conditional dependencies and posterior diabetes risk estimates. Further implementation details are provided in the accompanying notebook.
+Different modeling choices were explored. In addition to manually specified dependency assumptions and tree-based searches, score-based structure learning was applied using hill-climbing algorithms with alternative scoring functions. This allowed us to analyze how structural assumptions and preprocessing decisions influence the inferred conditional dependencies and posterior diabetes risk estimates. Further implementation details are provided in the accompanying notebook.
 }
 
 

@@ -1,0 +1,25 @@
+\begin{thebibliography}{}
+
+\bibitem[\protect\citeauthoryear{Ankan and Panda}{2015}]{pgmpy}
+Ankan, A., and Panda, A.
+\newblock 2015.
+\newblock pgmpy: Probabilistic graphical models using python.
+\newblock In {\em Proceedings of the 14th Python in Science Conference}.
+
+\bibitem[\protect\citeauthoryear{Pedregosa and others}{2011}]{scikit_learn}
+Pedregosa, F., et~al.
+\newblock 2011.
+\newblock Scikit-learn: Machine learning in python.
+\newblock {\em Journal of Machine Learning Research} 12:2825--2830.
+
+\bibitem[\protect\citeauthoryear{Smith \bgroup et al\mbox.\egroup
+  }{1988}]{uci_diabetes}
+Smith, J.~W.; Everhart, J.~E.; Dickson, W.~C.; Knowler, W.~C.; and Johannes,
+  R.~S.
+\newblock 1988.
+\newblock Using the adap learning algorithm to forecast the onset of diabetes
+  mellitus.
+\newblock In {\em Proceedings of the Annual Symposium on Computer Application
+  in Medical Care},  261--265.
+
+\end{thebibliography}
