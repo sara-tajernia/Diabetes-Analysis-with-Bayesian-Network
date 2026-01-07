@@ -55,7 +55,7 @@ We found that preprocessing choices strongly influence model behavior and interp
 % }
 \explanation{
 This project focuses on modeling diabetes risk using a Bayesian Network built from clinical and demographic variables. Diabetes is a chronic condition influenced by multiple interacting factors, making it a suitable domain for probabilistic graphical models that explicitly represent dependencies among variables and allow interpretable inference. \\
-The analysis is based on the Pima Indians Diabetes dataset, which contains medical measurements such as glucose concentration, body mass index, age, and pregnancy count, along with a binary outcome indicating diabetes diagnosis. The dataset has been widely used in the literature for studying diabetes prediction and presents typical challenges such as missing or implausible values and the need for discretization of continuous variables. \\
+The analysis is based on the Pima Indians Diabetes dataset \cite{uci_diabetes}, which contains medical measurements such as glucose concentration, body mass index, age, and pregnancy count, along with a binary outcome indicating diabetes diagnosis. The dataset has been widely used in the literature for studying diabetes prediction and presents typical challenges such as missing or implausible values and the need for discretization of continuous variables. \\
 Rather than aiming for maximum predictive accuracy, this work emphasizes interpretability and probabilistic reasoning. Bayesian Networks are employed to examine how evidence on specific variables influences the posterior probability of diabetes and to assess how modeling and preprocessing choices affect inference behavior.
 }
 
@@ -91,7 +91,7 @@ In particular, we investigate how different preprocessing choices and network st
 % }
 \subsection{Method}
 \explanation{
-The project was implemented using the \texttt{pgmpy} library to construct Bayesian Network models and perform probabilistic inference. The analysis started with data preprocessing, including handling missing or implausible values and discretizing continuous variables using different strategies. \\
+The project was implemented using the \texttt{pgmpy} \cite{pgmpy} library to construct Bayesian Network models and perform probabilistic inference. The analysis started with data preprocessing, including handling missing or implausible values (e.g., using scikit-learn imputation methods \cite{scikit_learn}) and discretizing continuous variables using different strategies. \\
 Several Bayesian Network structures were considered, including manually specified models and structures learned from data using score-based hill-climbing algorithms with different scoring functions. For each model, conditional probability distributions were estimated from the processed dataset. \\
 Inference queries were then performed to evaluate how evidence on selected variables affects the posterior probability of diabetes. By varying preprocessing methods and network structures, we analyzed their impact on inference behavior and model interpretability.
 }
@@ -214,9 +214,9 @@ GitHub repository: \href{https://github.com/sara-tajernia/Diabetes-Analysis-with
 
 \bibliographystyle{aaai}
 \bibliography{faikrmod3.bib}
-\cite{uci_diabetes}
-\cite{pgmpy}
-\cite{scikit_learn}
+% \cite{uci_diabetes}
+% \cite{pgmpy}
+% \cite{scikit_learn}
 
 % \attention{NOTICE: THIS REPORT'S LENGTH MUST NOT EXCEED \textbf{TWO PAGES} PLUS REFERENCES. THIS MAY MEAN THAT YOU WILL HAVE TO LEAVE OUT OF THE REPORT PART OF THE WORK YOU HAVE DONE OR OBSERVATIONS YOU HAVE. THIS IS NORMAL: THE REPORT SHOULD EMPHASIZE WHAT IS MOST SIGNIFICANT, NOTEWORTHY, AND REFER TO THE NOTEBOOK FOR ANYTHING ELSE. FOR ANY OTHER ASPECT OF YOUR WORK THAT YOU WOULD LIKE TO EMPHASIZE BUT CANNOT EXPLAIN HERE FOR LACK OF SPACE, FEEL FREE TO ADD COMMENTS IN THE NOTEBOOK.}
 
