@@ -1,0 +1,225 @@
+%File: formatting-instruction.tex
+\documentclass[letterpaper]{article}
+\usepackage{url,graphicx,xcolor}
+\usepackage{times}
+\usepackage{helvet}
+\usepackage{courier}
+\usepackage{hyperref}
+\usepackage[guidelines]{faikrmod3}
+% \usepackage[]{faikrmod3}
+% \usepackage[]{faikrmod3} % without guidelines
+\frenchspacing
+\setlength{\pdfpagewidth}{8.5in}
+\setlength{\pdfpageheight}{11in}
+
+
+
+% THE \pdfinfo /Title AND /Author ARE NOT NECESSARY, THEY ARE METADATA FOR THE FINAL PDF FILE
+\pdfinfo{
+/Title (Insert Your Title Here)
+/Author (Put All Your Authors Here, Separated by Commas)}
+\setcounter{secnumdepth}{0}  
+ \begin{document}
+% The file aaai.sty is the style file for AAAI Press 
+% proceedings, working notes, and technical reports.
+%
+\title{Interpretable Diabetes Risk Analysis Using Bayesian Networks}
+\author{Sara Tajernia, Mohammad Choupan, Mohammad Amin Mirzakuchaki\\
+Master's Degree in Artificial Intelligence, University of Bologna\\
+\{ sara.tajernia, mohammad.choupan, mohamma.mirzakuchaki \}@studio.unibo.it
+}
+\maketitle
+
+
+% \attention{DO NOT MODIFY THIS TEMPLATE - EXCEPT, OF COURSE FOR TITLE AND AUTHORS. REMOVE THE \texttt{guidelines} OPTION FROM  \texttt{$\backslash$usepackage[guidelines]\{faikrmod3\}} IN THE \LaTeX\ SOURCE IN THE FINAL VERSION.}
+
+\begin{abstract}
+\begin{quote}
+
+\explanation{
+This mini-project investigates the use of Bayesian Networks to model and explain diabetes risk using clinical variables from the Pima Indians Diabetes dataset. \\
+We compare different preprocessing strategies and Bayesian Network structures, including manually designed models and structures learned from data, and perform probabilistic inference to analyze the effect of evidence on diabetes risk. \\
+We found that preprocessing choices strongly influence model behavior and interpretability, with learned structures combined with appropriate discretization producing more stable and meaningful posterior inferences.
+}
+
+\end{quote}
+\end{abstract}
+
+
+\section{Introduction}
+\subsection{Domain}
+% \explanation{
+% Introduce your work: what you are modeling, if you are drawing inspiration from an existing model, study, paper, textbook example, challenge, \dots.\\
+% %
+% Briefly provide whatever background information on the domain you think is necessary for the reader to understand the model and your design choices.
+% }
+\explanation{
+This project focuses on modeling diabetes risk using a Bayesian Network built from clinical and demographic variables. Diabetes is a chronic condition influenced by multiple interacting factors, making it a suitable domain for probabilistic graphical models that explicitly represent dependencies among variables and allow interpretable inference. \\
+The analysis is based on the Pima Indians Diabetes dataset, which contains medical measurements such as glucose concentration, body mass index, age, and pregnancy count, along with a binary outcome indicating diabetes diagnosis. The dataset has been widely used in the literature for studying diabetes prediction and presents typical challenges such as missing or implausible values and the need for discretization of continuous variables. \\
+Rather than aiming for maximum predictive accuracy, this work emphasizes interpretability and probabilistic reasoning. Bayesian Networks are employed to examine how evidence on specific variables influences the posterior probability of diabetes and to assess how modeling and preprocessing choices affect inference behavior.
+}
+
+% \attention{HERE AND EVERYWHERE ELSE: ALWAYS KEEP IN MIND THAT, CRUCIALLY, WHATEVER TEXT/CODE/FIGURES/IDEAS/... YOU TAKE FROM ELSEWHERE MUST BE CLEARLY IDENTIFIED AND PROPERLY REFERENCED IN THE REPORT. SHOULD WE REFERENCE ANYTHING? LIKE WHERE THE DATASET COMES FROM?}
+
+% \subsection{Aim}
+% \explanation{
+% Explain the purpose of your project: what do you intend to observe/try/experience/\dots? \\
+% \begin{itemize}
+%     \item 
+% Example: the purpose of this project is to implement part of the Bayesian network described in \cite{10.1371/journal.pone.0220065} and experiment with concepts seen in class \\
+% %
+% \item Another example: our aim was to experiment the effect of discretization of continuous variables \\
+% %
+% \item Yet another example: we are interested in comparing the run-time and error of approximate inference under different conditions
+% %
+% \item One final example: we studied \textit{value of information}: something mentioned in class but not covered in this module, which sparked our interest.
+% \end{itemize}
+% }
+\subsection{Aim}
+\explanation{
+The aim of this project is to explore the use of Bayesian Networks for interpretable diabetes risk analysis. \\
+In particular, we investigate how different preprocessing choices and network structures influence probabilistic inference results, focusing on the stability and plausibility of posterior diabetes risk estimates rather than predictive accuracy.
+}
+
+% \subsection{Method}
+% \explanation{
+% Describe the methodology you followed
+% \begin{itemize}
+%     \item 
+% Example: we used pgmpy library methods\footnote{This is just an example: indeed, it is NOT necessary to use pgmpy; the coding language doesn't have to be python either. Feel free to use whatever software framework suits your needs.} to implement our network and run queries. To understand if differences in models, queries, parameters or number of samples induced differences in accuracy, we varied evidence nodes, conditional probability distributions, inference method, ...
+% \end{itemize}
+% }
+\subsection{Method}
+\explanation{
+The project was implemented using the \texttt{pgmpy} library to construct Bayesian Network models and perform probabilistic inference. The analysis started with data preprocessing, including handling missing or implausible values and discretizing continuous variables using different strategies. \\
+Several Bayesian Network structures were considered, including manually specified models and structures learned from data using score-based hill-climbing algorithms with different scoring functions. For each model, conditional probability distributions were estimated from the processed dataset. \\
+Inference queries were then performed to evaluate how evidence on selected variables affects the posterior probability of diabetes. By varying preprocessing methods and network structures, we analyzed their impact on inference behavior and model interpretability.
+}
+
+
+% \subsection{Results}
+
+% \explanation{
+% In a few lines: what are the most noteworthy results you have observed or things you have learned/understood from this project? (only the highlights: there will be a dedicated paragraph for presenting results in the Analysis section)
+% }
+
+\subsection{Results}
+\explanation{
+The experiments show that Bayesian Network behavior is strongly affected by preprocessing and structure choices. Simple or manually defined structures often produced unstable or uninformative posterior probabilities, whereas models learned from data yielded more coherent inference results. \\
+In particular, combinations of appropriate imputation and discretization methods led to posterior diabetes risk estimates that were more consistent and interpretable across different evidence configurations.
+}
+
+
+% \section{Model}
+
+% \explanation{
+% Insert a picture of your Bayesian network(s) (Figure~\ref{fig:network})
+% %
+% \begin{figure}
+%     \centering
+%     \includegraphics[scale=1.0]{F2.png}
+%     \caption{Bayesian network. Image taken from \url{https://www.intechopen.com/chapters/62844}}
+%     \label{fig:network}
+% \end{figure}
+% }
+
+% \explanation{
+% Explain the following aspects of your model (if there is too much to say and not enough space, put in your notebook whatever does not fit here):
+% \begin{itemize}
+%     \item nodes: if not self-explanatory, explain each random variable's meaning/intuition and type/range
+%     \item conditional distributions (for example, the CPTs, some or all of them)
+%     \item the procedure you followed to build your model (structure and conditional distributions): from reference paper? by analyzing the domain? learned from data? just assigned probability distributions arbitrarily? followed a particular methodology for building the network? ...
+% \end{itemize}  
+% In general, only write whatever is relevant and necessary to understand the rest of the report. Do not explain concepts seen in class or explained in textbooks. Do not describe models taken from textbook/literature/tutorials/libraries, like (for example) the Asia network. Instead, if you are using a model as-is: just insert a reference or URL\footnote{\url{https://www.bnlearn.com/bnrepository/}.}
+% }
+
+\section{Model}
+
+\explanation{
+Figure~\ref{fig:network} illustrates a representative Bayesian Network used in this project. The model includes nodes corresponding to clinical and demographic variables such as glucose concentration, body mass index, age, and number of pregnancies, together with a binary node representing diabetes diagnosis.
+%
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\linewidth]{hc_knn_kmeans_aic.png}
+    \caption{Bayesian Network structure learned using hill-climbing structure learning with AIC score, after KNN imputation and KMeans discretization.}
+    \label{fig:network}
+\end{figure}
+}
+
+\explanation{
+Continuous variables were discretized into a limited number of states to enable parameter learning and tractable inference. Conditional probability tables were estimated directly from the preprocessed dataset, following imputation of missing or implausible values. \\
+Different modeling choices were explored. In addition to manually specified dependency assumptions, score-based structure learning was applied using hill-climbing algorithms with alternative scoring functions. This allowed us to analyze how structural assumptions and preprocessing decisions influence the inferred conditional dependencies and posterior diabetes risk estimates. Further implementation details are provided in the accompanying notebook.
+}
+
+
+\section{Analysis}
+
+% \subsection{Experimental setup}
+% \explanation{
+% Briefly describe the probability queries or other experiments that you have carried out. Describe how you plan to evaluate the results (for example: are there results that you would expect?)
+% }
+
+\subsection{Experimental setup}
+\explanation{
+The analysis is based on probabilistic inference queries aimed at evaluating how evidence on selected clinical variables affects the posterior probability of diabetes. For each Bayesian Network model, we queried the probability of the diabetes node under different evidence configurations, such as high or low glucose levels and varying body mass index ranges. \\
+Experiments were repeated across different preprocessing pipelines and network structures to assess the robustness of inference results. The evaluation focused on qualitative comparison of posterior probability trends and their plausibility rather than on predictive accuracy metrics. In particular, we examined whether changes in evidence produced consistent and interpretable variations in diabetes risk estimates.
+}
+
+
+% \subsection{Results}
+% \explanation{
+% What did you observe? \\
+% %
+% All according to expectations? \\
+% %
+% Anything surprising or worthwhile mentioning?
+% }
+
+\subsection{Results}
+\explanation{
+The inference results highlight substantial differences between models depending on preprocessing and structural assumptions. Bayesian Networks with simple or manually defined structures often produced posterior diabetes probabilities that were either insensitive to evidence or highly unstable across similar queries. \\
+In contrast, models learned from data exhibited more coherent behavior. In these cases, increases in glucose levels and body mass index generally led to higher posterior diabetes risk, aligning with domain expectations. However, some sensitivity to discretization boundaries remained, indicating that inference outcomes are influenced not only by network structure but also by preprocessing choices. \\
+Overall, the results confirm that careful preprocessing and structure learning are essential for obtaining meaningful and interpretable probabilistic inferences in this domain.
+}
+
+
+
+\section{Conclusion}
+\explanation{
+This project explored the use of Bayesian Networks for interpretable diabetes risk analysis, with particular emphasis on the impact of preprocessing and structural choices on probabilistic inference. The results show that inference quality and stability depend strongly on how variables are discretized and how the network structure is defined or learned. While the models are not intended to provide clinical predictions, they demonstrate how Bayesian Networks can support transparent reasoning about medical risk factors. Limitations include sensitivity to preprocessing decisions and the use of a single dataset, suggesting that future work could explore alternative discretization strategies, additional variables, or external data sources.
+}
+
+
+
+% \section{Links to external resources}
+% \explanation{
+% Optionally, insert here:
+% \begin{itemize}
+%     \item a link to your GitHub or any other public repo where one can find your code (only if you did not submit your code on Virtuale) 
+%     \item a link to your dataset (only if you have used a dataset, for example, for learning network parameters or structure)
+% \end{itemize}
+% Leave this section empty if you have all your resources in Virtuale. \textbf{Do not insert code/outputs in this report}.
+% }
+% \section{Links to external resources}
+% \explanation{
+% GitHub repository: \href{https://github.com/sara-tajernia/Diabetes-Analysis-with-Bayesian-Network/}{github.com/sara-tajernia/Diabetes-Analysis-with-Bayesian-Network}
+% }
+\section{Links to external resources}
+\explanation{
+\raggedright
+GitHub repository: \href{https://github.com/sara-tajernia/Diabetes-Analysis-with-Bayesian-Network/}{github.com/sara-tajernia/Diabetes-Analysis-with-Bayesian-Network}
+}
+
+\bigskip
+
+\bibliographystyle{aaai}
+\bibliography{faikrmod3.bib}
+\cite{uci_diabetes}
+\cite{pgmpy}
+\cite{scikit_learn}
+
+% \attention{NOTICE: THIS REPORT'S LENGTH MUST NOT EXCEED \textbf{TWO PAGES} PLUS REFERENCES. THIS MAY MEAN THAT YOU WILL HAVE TO LEAVE OUT OF THE REPORT PART OF THE WORK YOU HAVE DONE OR OBSERVATIONS YOU HAVE. THIS IS NORMAL: THE REPORT SHOULD EMPHASIZE WHAT IS MOST SIGNIFICANT, NOTEWORTHY, AND REFER TO THE NOTEBOOK FOR ANYTHING ELSE. FOR ANY OTHER ASPECT OF YOUR WORK THAT YOU WOULD LIKE TO EMPHASIZE BUT CANNOT EXPLAIN HERE FOR LACK OF SPACE, FEEL FREE TO ADD COMMENTS IN THE NOTEBOOK.}
+
+
+
+\end{document}
