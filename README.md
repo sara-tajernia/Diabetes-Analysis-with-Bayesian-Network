@@ -8,6 +8,26 @@
   - [Dataset Overview](#dataset-overview)
   - [EDA](#eda)
   - [Training Bayesian Network](#training-bayesian-network)
+  - [Theory Recap](#theory-recap)
+  - [1. Bayesian Networks](#1-bayesian-networks)
+  - [2. Tree Search Structure Learning](#2-tree-search-structure-learning)
+    - [Mutual Information Criterion](#mutual-information-criterion)
+    - [Properties](#properties)
+  - [3. Hill-Climbing Structure Learning](#3-hill-climbing-structure-learning)
+    - [Search Strategy](#search-strategy)
+    - [Limitations](#limitations)
+  - [4. Scoring Functions](#4-scoring-functions)
+    - [4.1 K2 Score](#41-k2-score)
+    - [4.2 AIC Score](#42-aic-score)
+  - [5. Conditional Probability Distributions (CPDs)](#5-conditional-probability-distributions-cpds)
+    - [Maximum Likelihood Estimation (MLE)](#maximum-likelihood-estimation-mle)
+    - [Bayesian Estimation (Dirichlet Smoothing)](#bayesian-estimation-dirichlet-smoothing)
+  - [6. Variable Elimination](#6-variable-elimination)
+    - [Complexity](#complexity)
+  - [7. Markov Properties](#7-markov-properties)
+    - [Local Markov Property](#local-markov-property)
+    - [Global Markov Property (d-separation)](#global-markov-property-d-separation)
+  - [8. Interpretation in Practice](#8-interpretation-in-practice)
   - [Total Results Comparison](#total-results-comparison)
     - [Initial Observation: Basic Models](#initial-observation-basic-models)
     - [PreProcessing Methods Comparison](#preprocessing-methods-comparison)
@@ -75,6 +95,203 @@ we will go through all three options and compare the results.
 
 2. Find the Conditional Probability Distributions (CPDs) for each node in the network.
 3. Perform inference on the Bayesian Network to make analyses with variable elimination. We will perform infrences to analyses the result of different scenarios.
+
+## Theory Recap
+
+## 1. Bayesian Networks
+
+A **Bayesian Network (BN)** is a probabilistic graphical model represented by a **Directed Acyclic Graph (DAG)**  
+\[
+G = (V, E)
+\]
+where:
+
+- \( V = \{X_1, X_2, \dots, X_n\} \) are random variables  
+- \( E \) represents conditional dependencies
+
+The joint probability distribution factorizes as:
+
+\[
+P(X_1, X_2, \dots, X_n) = \prod_{i=1}^{n} P(X_i \mid \text{Pa}(X_i))
+\]
+
+where \( \text{Pa}(X_i) \) denotes the parents of node \( X_i \).
+
+---
+
+## 2. Tree Search Structure Learning
+
+Tree Search learns a **tree-structured Bayesian Network**, meaning:
+
+- Each node has **at most one parent**
+- The resulting graph is simple and interpretable
+
+### Mutual Information Criterion
+
+Tree search maximizes **mutual information** between variables:
+
+\[
+I(X; Y) = \sum_{x,y} P(x,y) \log \frac{P(x,y)}{P(x)P(y)}
+\]
+
+The algorithm selects edges that **maximize total mutual information**, subject to the tree constraint.
+
+### Properties
+
+- Low variance
+- Stable structure
+- Limited expressiveness
+
+---
+
+## 3. Hill-Climbing Structure Learning
+
+Hill-climbing is a **score-based greedy optimization algorithm**.
+
+### Search Strategy
+
+At each step, the algorithm considers:
+
+- Adding an edge
+- Removing an edge
+- Reversing an edge
+
+The move that **maximally improves the score** is accepted.
+
+\[
+G^{*} = \arg\max_{G} S(G \mid D)
+\]
+
+where:
+
+- \( G \) is a candidate graph
+- \( D \) is the dataset
+- \( S \) is a scoring function
+
+### Limitations
+
+- Can get stuck in local maxima
+- Sensitive to noise
+- More expressive than trees
+
+---
+
+## 4. Scoring Functions
+
+### 4.1 K2 Score
+
+K2 is a **Bayesian scoring function** assuming a Dirichlet prior:
+
+\[
+P(D \mid G) = \prod_{i=1}^{n} \prod_{j=1}^{q_i}
+\frac{(r_i - 1)!}{(N_{ij} + r_i - 1)!}
+\prod_{k=1}^{r_i} N_{ijk}!
+\]
+
+where:
+
+- \( r_i \): number of states of variable \( X_i \)
+- \( q_i \): number of parent configurations
+- \( N_{ijk} \): count of samples
+
+**Behavior**:
+
+- Encourages strong dependencies
+- Tends to produce denser graphs
+- Risk of overfitting
+
+---
+
+### 4.2 AIC Score
+
+AIC is an **information-theoretic criterion**:
+
+\[
+\text{AIC} = \log P(D \mid \hat{\theta}, G) - k
+\]
+
+where:
+
+- \( k \) is the number of parameters
+- \( \hat{\theta} \) are maximum likelihood estimates
+
+**Behavior**:
+
+- Penalizes complexity
+- Encourages simpler networks
+- Better generalization
+
+---
+
+## 5. Conditional Probability Distributions (CPDs)
+
+After learning the structure, CPDs are estimated.
+
+### Maximum Likelihood Estimation (MLE)
+
+\[
+P(X_i = k \mid \text{Pa}(X_i) = j) =
+\frac{N_{ijk}}{N_{ij}}
+\]
+
+### Bayesian Estimation (Dirichlet Smoothing)
+
+\[
+P(X_i = k \mid \text{Pa}(X_i) = j) =
+\frac{N_{ijk} + \alpha}{N_{ij} + r_i \alpha}
+\]
+
+This avoids zero probabilities.
+
+---
+
+## 6. Variable Elimination
+
+Variable Elimination computes posterior probabilities:
+
+\[
+P(Q \mid E = e) = \sum_{Z} \prod_i \phi_i
+\]
+
+Steps:
+
+1. Multiply factors
+2. Marginalize hidden variables
+3. Normalize
+
+### Complexity
+
+- Exponential in **treewidth**
+- Ordering matters
+
+---
+
+## 7. Markov Properties
+
+### Local Markov Property
+
+Each variable is independent of its non-descendants given its parents:
+
+\[
+X_i \perp \text{NonDescendants}(X_i) \mid \text{Pa}(X_i)
+\]
+
+---
+
+### Global Markov Property (d-separation)
+
+Two variables \( X \) and \( Y \) are conditionally independent given \( Z \) if all paths between them are blocked by \( Z \).
+
+---
+
+## 8. Interpretation in Practice
+
+- Tree models → stable but simple
+- Hill-climbing + K2 → strong interactions, risk of overfitting
+- Hill-climbing + AIC → balanced models
+- Preprocessing (KNN, KMeans) improves inference quality
+
+These behaviors match observed results in the diabetes dataset.
 
 ## Total Results Comparison
 
