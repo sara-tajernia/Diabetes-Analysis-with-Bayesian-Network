@@ -70,14 +70,10 @@ In particular, combinations of appropriate imputation and discretization methods
 
 
 \section{Model}
-
-% \explanation{
-% Figure~\ref{fig:network} illustrates a representative Bayesian Network used in this project. The model includes nodes corresponding to clinical and demographic variables such as glucose concentration, body mass index, age, and number of pregnancies, together with a binary node representing diabetes diagnosis.
-% %
 \begin{figure}
     \centering
     \includegraphics[width=0.8\linewidth]{hc_aic.png}
-    \caption{‌Bayesian Network structure learned using Hill Climbing with AIC score, used as a representative model for probabilistic inference and classification.}
+    \caption{Bayesian Network structure learned using Hill Climbing with AIC score, selected as one of the best-performing models for probabilistic inference and classification.}
     \label{fig:network}
 \end{figure}
 % }
@@ -99,10 +95,18 @@ Results are evaluated qualitatively by examining posterior probability trends, w
 
 
 \subsection{Results}
-\explanation{
-Inference results show substantial differences in sensitivity across Bayesian Network structures. Simple models, such as the naïve Bayes–like and tree-based networks, exhibit little to no change in posterior diabetes probability under varying evidence (typically below 2\%). In contrast, models with richer dependency structures respond more strongly to changes in risk factors. \\
-When age increases under fixed high glucose levels, the grouped model shows a clear rise in inferred diabetes risk (approximately +25 percentage points), while simpler models remain nearly flat. Similarly, Hill Climbing–learned models display sharp increases in diabetes probability for elderly individuals as glucose levels rise, with changes exceeding 70 percentage points. Finally, when genetic risk is high, the grouped model captures a notable increase in diabetes probability as the number of pregnancies increases (around +30 percentage points). These findings highlight the impact of structural assumptions on the magnitude and plausibility of inferred risk.
-}
+\begin{itemize}
+    \item \textbf{Inference and Query Results:}  
+    Inference results reveal substantial sensitivity differences across Bayesian Network structures. Simple models, such as Na\"ive Bayes--like and tree-based networks, show minimal changes in posterior diabetes probability under varying evidence (typically below 2\%). In contrast, models with richer dependency structures respond more strongly to changes in risk factors. The grouped model captures clear increases in inferred diabetes risk for fixed high glucose levels (approximately +25 percentage points), elderly individuals as glucose levels rise (exceeding 70 percentage points), and high genetic risk combined with increasing numbers of pregnancies (around +30 percentage points), highlighting the impact of structural assumptions on inferred risk.
+
+    \item \textbf{Classifier Performance:}  
+    The selected Hill Climbing model using the AIC score achieved a mean classification accuracy of 75.1\% ($\pm$4.1\%) under 10-fold cross-validation, supporting its use as a representative structure for both probabilistic inference and prediction.
+\end{itemize}
+% \explanation{
+% Inference results show substantial differences in sensitivity across Bayesian Network structures. Simple models, such as the naïve Bayes–like and tree-based networks, exhibit little to no change in posterior diabetes probability under varying evidence (typically below 2\%). In contrast, models with richer dependency structures respond more strongly to changes in risk factors. \\
+% When age increases under fixed high glucose levels, the grouped model shows a clear rise in inferred diabetes risk (approximately +25 percentage points), while simpler models remain nearly flat. Similarly, Hill Climbing–learned models display sharp increases in diabetes probability for elderly individuals as glucose levels rise, with changes exceeding 70 percentage points. Finally, when genetic risk is high, the grouped model captures a notable increase in diabetes probability as the number of pregnancies increases (around +30 percentage points). These findings highlight the impact of structural assumptions on the magnitude and plausibility of inferred risk. \\
+% The selected Hill Climbing (AIC) model also achieved a mean accuracy of 75.1\% (±4.1\%) under 10-fold cross-validation, supporting its use as a representative structure.
+% }
 
 
 
