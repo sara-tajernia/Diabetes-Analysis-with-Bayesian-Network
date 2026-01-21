@@ -35,8 +35,10 @@
       - [2. Mean Imputation + KMeans Discretization](#2-mean-imputation--kmeans-discretization)
       - [3. KNN Imputation + Quantile Discretization](#3-knn-imputation--quantile-discretization)
       - [4. KNN Imputation + KMeans Discretization](#4-knn-imputation--kmeans-discretization)
+      - [Drop Missing Values + Quantile Discretization (Baseline)](#drop-missing-values--quantile-discretization-baseline)
     - [Model Structure Comparison (Non-Basic Models)](#model-structure-comparison-non-basic-models)
     - [Summary of Key Findings](#summary-of-key-findings)
+- [TODO](#todo)
 
 ## Abstract
 
@@ -88,13 +90,13 @@ On Data Analysis we do the following steps:
 for Training Bayesian Network we will use pgmpy library. We will follow these steps:
 
 1. Define the structure of the Bayesian Network which there is three options here:
-   - we can define the structure manually based on domain knowledge.
-   - we can use structure learning algorithms to learn the structure from data.
-   - we can use a hybrid approach where we define some parts of the structure manually and learn other parts from data.
+   - we could define the structure manually based on domain knowledge.
+   - we could use structure learning algorithms to learn the structure from data.
+   - we could use a hybrid approach where we define some parts of the structure manually and learn other parts from data.
 we will go through all three options and compare the results.
 
-2. Find the Conditional Probability Distributions (CPDs) for each node in the network.
-3. Perform inference on the Bayesian Network to make analyses with variable elimination. We will perform infrences to analyses the result of different scenarios.
+1. Find the Conditional Probability Distributions (CPDs) for each node in the network.
+2. Perform inference on the Bayesian Network to make analyses with variable elimination. We will perform infrences to analyses the result of different scenarios.
 
 ## Theory Recap
 
@@ -303,16 +305,18 @@ Four preprocessing pipelines were considered:
 - Mean Imputation + KMeans Discretization
 - KNN Imputation + Quantile Discretization
 - KNN Imputation + KMeans Discretization
+- Drop Missing Values + Quantile Discretization (Baseline)
+As result of the plots we decided to drop the missing values and use quantile discretization as our baseline preprocessing method.
 
 For each preprocessing pipeline, five Bayesian Network structures were learned:
 
-- Basic (fixed structure)
+- Basic Naive Bayes (fixed structure)
 - Grouped
 - Tree-based
 - Hill Climbing with K2 score
 - Hill Climbing with AIC score
 
-This results in a total of **20 distinct models**, each evaluated across multiple clinically motivated inference questions.
+This results in a total of **5 distinct models**, each evaluated across multiple clinically motivated inference questions.
 
 ---
 
@@ -380,6 +384,16 @@ Among all preprocessing strategies, **KNN Imputation + KMeans Discretization con
 
 Hill Climbing models trained under this preprocessing pipeline demonstrated both **strong sensitivity to evidence** and **reasonable uncertainty**, making them particularly suitable for scenario-based risk analysis.
 
+#### Drop Missing Values + Quantile Discretization (Baseline)
+
+As a baseline, models trained on datasets with dropped missing values and quantile discretization exhibited:
+
+- Moderate performance, but generally inferior to KNN-based imputation methods.
+- Less stable inference patterns, likely due to reduced sample size and potential bias from missing data removal.
+- Overall, this baseline approach underperformed compared to more sophisticated imputation strategies.
+
+This highlights the importance of effective missing-value handling in probabilistic modeling.
+
 ---
 
 ### Model Structure Comparison (Non-Basic Models)
@@ -403,3 +417,9 @@ Notably, Hill Climbing models benefited the most from KNN-based imputation, indi
 - Hill Climbing–based Bayesian Networks, particularly with KNN + KMeans preprocessing, provide the most reliable and interpretable results.
 
 Overall, the results highlight that **Bayesian Network inference quality is driven more by preprocessing decisions than by the choice of scoring function alone**, underscoring the importance of careful data preparation in probabilistic modeling.
+
+# TODO
+
+  - [ ] Add more interpretation about the results of different preprocessing methods and structure learning methods.
+  - [ ] Add Classification Report and Confusion Matrix for the models.
+  - [ ] Chnage preprocessing method description according to the final choice.
