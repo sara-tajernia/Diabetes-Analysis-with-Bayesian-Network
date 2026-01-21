@@ -38,7 +38,7 @@
       - [Drop Missing Values + Quantile Discretization (Baseline)](#drop-missing-values--quantile-discretization-baseline)
     - [Model Structure Comparison (Non-Basic Models)](#model-structure-comparison-non-basic-models)
     - [Summary of Key Findings](#summary-of-key-findings)
-- [TODO](#todo)
+  - [TODO](#todo)
 
 ## Abstract
 
@@ -418,8 +418,8 @@ Notably, Hill Climbing models benefited the most from KNN-based imputation, indi
 
 Overall, the results highlight that **Bayesian Network inference quality is driven more by preprocessing decisions than by the choice of scoring function alone**, underscoring the importance of careful data preparation in probabilistic modeling.
 
-# TODO
+## TODO
 
   - [ ] Add more interpretation about the results of different preprocessing methods and structure learning methods.
   - [ ] Add Classification Report and Confusion Matrix for the models.
-  - [ ] Chnage preprocessing method description according to the final choice.
+  - [ ] Change preprocessing method description according to the final choice.
